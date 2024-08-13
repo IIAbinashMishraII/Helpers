@@ -39,9 +39,14 @@ class Permutations:
         self.res = []
 
 
-solve = Permutations(input())
-solve.without_repetitions()
-print(solve.get_result())
-solve.clear()
-solve.with_repetitions()
-print(solve.get_result())
+# solve = Permutations(input())
+# solve.without_repetitions()
+# print(solve.get_result())
+# solve.clear()
+# solve.with_repetitions()
+# print(solve.get_result())
+
+
+board = []
+for i in range(8):
+    board.append(list(input()))
