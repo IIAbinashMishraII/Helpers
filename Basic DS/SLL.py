@@ -124,13 +124,12 @@ class LinkedList:
         print(count)
     
     def printll(self):
-        arr = []
         curr = self.head
         # Same as sizell()
         while curr:
-            arr.append(str(curr.data))
+            print(curr.data, end=' -> ')
             curr = curr.next
-        print(' -> '.join(arr))
+        print(None)
         
 ll =LinkedList()
 ll.remove_head()
