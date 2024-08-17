@@ -138,7 +138,7 @@ class Queue():
         self.tail.next = new_node
         self.tail = new_node
     
-    def dequeue(self):
+    def enqueue(self):
         if self.head is None:
              print('Queue is empty')
              return 
@@ -174,6 +174,81 @@ def llq_test():
     llq.front()
     llq.rear()
 
-lls_test()
-ls_test()
-llq_test()
+class Dequeue():
+    def __init__(self):
+        self.head = None
+        self.size = 0
+        self.tail = None
+    
+    def is_empty(self):
+        return self.size == 0
+    
+    def enqueue(self, data):
+        new_node = DNode(data)
+        if self.is_empty():
+            self.head = self.tail = new_node
+        else:
+            self.tail.next = new_node
+            new_node.prev = self.tail
+            self.tail = new_node
+        self.size+=1
+
+    def enqueue_left(self, data):
+        new_node = DNode(data)
+        if self.is_empty():
+            self.head = self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head.prev = new_node
+            self.head = new_node
+        self.size+=1
+    
+    def dequeue(self):
+        if self.is_empty():
+            print('Deque is empty')
+        else:
+            self.head = self.head.next
+            self.head.prev = None
+        self.size-=1
+        
+    def dequeue_left(self):
+        if self.is_empty():
+            print('Deque is empty')
+        else:
+            self.tail = self.tail.prev
+            self.tail.next = None
+        self.size-=1
+
+    def front(self):
+        if self.is_empty():
+            print('Queue is empty')
+        else:  
+            print("front: ", self.head.data)
+        
+    def rear(self):
+        if self.is_empty():
+            print('Queue is empty')
+        else:   
+            print("rear: ", self.tail.data)
+def lld_test():
+    lld = Dequeue()
+    lld.enqueue(9)
+    lld.enqueue(2)
+    lld.enqueue(5)
+    lld.front()
+    lld.rear()
+    lld.enqueue_left(7)
+    lld.enqueue_left(4)
+    lld.front()
+    lld.rear()
+    lld.dequeue()
+    lld.dequeue_left()
+    lld.front()
+    lld.rear()
+
+
+
+# lls_test()
+# ls_test()
+# llq_test()
+lld_test()
