@@ -1,11 +1,10 @@
-# Stack implementation using Linked List and List.
+from Helpers import DNode, SNode
+# Stack implementation using Linked List and List. Basically, stack is just a list with extra care.
+# Queue implementation using Linked List and Stack
+# Deque implementation using Doubly Linked List
+# Queues can be implemtented using list, collections.deque (double ended queue), queue.Queue
 
-# Linked List implementation
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
+# Stack Linked List implementation
 class ll_stack:
     def __init__(self, n):
         self.head = None
@@ -16,7 +15,7 @@ class ll_stack:
         if self.size >= self.n:
             print('Stack overflow')
             return
-        new_node = Node(data)
+        new_node = SNode(data)
         new_node.next = self.head
         self.head = new_node
         self.size += 1
@@ -47,7 +46,6 @@ class ll_stack:
             print(curr.data, end=' <- ')
             curr = curr.next
         print('bottom')
-
 def lls_test():
     lls = ll_stack(int(input("lls_test:")))
     lls.pop()
@@ -70,9 +68,7 @@ def lls_test():
     lls.pop()
     lls.printstack()
 
-
-
-# List implementation
+# Stack List implementation
 class list_stack:
     def __init__(self, n):
         self.a = []
@@ -105,7 +101,6 @@ class list_stack:
         for i in self.a:
             print(i, end =' -> ')
         print('top')
-
 def ls_test():
     ls = list_stack(int(input("ls_test:")))
     ls.pop()
@@ -128,5 +123,57 @@ def ls_test():
     ls.pop()
     ls.printstack()
 
+# Queue Linked List implementation
+class Queue():
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    def is_empty(self):
+        return self.tail is None and self.head is None
+            
+    def enqueue(self, data):
+        new_node = SNode(data)
+        if self.tail is None:
+            self.head = self.tail = new_node
+        self.tail.next = new_node
+        self.tail = new_node
+    
+    def dequeue(self):
+        if self.head is None:
+             print('Queue is empty')
+             return 
+        self.head = self.head.next
+        if self.head is None:
+            self.tail = None
+    
+    def front(self):
+        if self.is_empty():
+             print('Queue is empty')
+             return 
+        print("front: ", self.head.data)
+        return
+    
+    def rear(self):
+        if self.is_empty():
+             print('Queue is empty')
+             return 
+        
+        print("rear: ", self.tail.data)
+        return
+def llq_test():
+    llq = Queue()
+    llq.enqueue(5)
+    llq.enqueue(4)
+    llq.enqueue(2)
+    llq.enqueue(11)
+    llq.front()
+    llq.rear()
+    llq.dequeue()
+    llq.dequeue()
+    llq.enqueue(9)
+    llq.front()
+    llq.rear()
+
 lls_test()
 ls_test()
+llq_test()

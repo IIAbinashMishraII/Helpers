@@ -1,17 +1,12 @@
+from Helpers import DNode
 # Remembet DLL is easier compared to LL because you can just do .prev and go back
-
-class Node:
-    def __init__(self, data=None, next=None, prev=None):
-        self.data = data
-        self.next = next # Pointer to the address of the next node in the memory
-        self.prev = prev
 
 class DLinkedList:
     def __init__(self):
         self.head = None 
 
     def insert_head(self, data):
-        new_node = Node(data)
+        new_node = DNode(data)
         new_node.next = self.head # Pointing the new_node's next to the current head
         if self.head: # head is set, now to set prev pointer
             self.head.prev = new_node
@@ -19,7 +14,7 @@ class DLinkedList:
         return new_node
 
     def insert_tail(self, data):
-        new_node = Node(data)
+        new_node = DNode(data)
         curr = self.head
         if self.head is None:
             self.head = new_node
@@ -31,7 +26,7 @@ class DLinkedList:
         return self.head
 
     def insert_index(self, data, index):
-        new_node = Node(data)
+        new_node = DNode(data)
         if self.head is None:
             self.head = new_node
             return 

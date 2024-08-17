@@ -1,16 +1,12 @@
+from Helpers import SNode
 # Went further today
-
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None # Pointer to the address of the next node in the memory
 
 class CLinkedList:
     def __init__(self):
         self.head = None 
 
     def insert_head(self, data):
-        new_node = Node(data)
+        new_node = SNode(data)
         if self.head is None:
             new_node.next = new_node
             self.head = new_node
@@ -23,7 +19,7 @@ class CLinkedList:
         self.head = new_node
 
     def insert_tail(self, data):
-        new_node = Node(data)
+        new_node = SNode(data)
         if self.head is None:
             new_node.next = new_node
             self.head = new_node
@@ -35,7 +31,7 @@ class CLinkedList:
         new_node.next = self.head
     
     def insert_index(self, data, index):
-        new_node = Node(data)
+        new_node = SNode(data)
         if index<0:
             print('Invalid index')
             return

@@ -1,14 +1,11 @@
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None # Pointer to the address of the next node in the memory
+from Helpers import SNode
 
 class LinkedList:
     def __init__(self):
         self.head = None 
 
     def insert_head(self, data):
-        new_node = Node(data)
+        new_node = SNode(data)
         if self.head is None:
             self.head = new_node
             return
@@ -25,7 +22,7 @@ class LinkedList:
             pos+=1
             curr=curr.next
         if curr != None:
-            new_node = Node(data)
+            new_node = SNode(data)
             new_node.next = curr.next 
             curr.next = new_node
         else:
@@ -33,7 +30,7 @@ class LinkedList:
 
     def insert_tail(self, val):
         curr = self.head
-        new_node = Node(val)
+        new_node = SNode(val)
         # Why do we need to use self.head instead of cuur here? 
         # Because if curr is empty, it will just be a local variable. It will not point to anything and will not work.
         # Else, it references the object self.head, doesn't hold it by itself, so a change in curr.next works.
