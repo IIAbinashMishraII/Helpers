@@ -248,7 +248,7 @@ def lld_test():
 
 
 
-# lls_test()
-# ls_test()
-# llq_test()
+lls_test()
+ls_test()
+llq_test()
 lld_test()
