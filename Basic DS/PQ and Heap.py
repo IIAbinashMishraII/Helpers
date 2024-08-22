@@ -1,8 +1,8 @@
 # PQ is an abstract data structure which can implemented using arrays, linked list, heap, BST
 #             array     l.list      heap        BST
-# enqueue      O(1)
-# dequeue      O(n)
-# peek         O(n)
+# enqueue      O(1)      O(n)
+# dequeue      O(n)      O(1)
+# peek         O(n)      O(1)
 
 import sys
 
