@@ -70,22 +70,41 @@ class LLPQ:
         self.size = 0
 
     def enqueue(self, val, pr):
-        if self.size == 0:
-            self.head = PQNode(val, pr)
-            return
-        curr = self.head
         new_node = PQNode(val, pr)
-        if curr.pr < new_node.pr:
+        if self.size == 0 or pr > self.head.pr:
             new_node.next = self.head
-            new_node = self.head
+            self.head = new_node
+        else:
+            curr = self.head
+            while curr.next and curr.next.pr >= pr:
+                curr = curr.next
+            new_node.next = curr.next
+            curr.next = new_node
+        self.size += 1
+
+    def dequeue(self):
+        if self.size == 0:
+            print("Queue underflow")
             return
-        while curr.next:
-            if curr.next.pr <= new_node.pr:
-                break
-            curr = curr.next
-        new_node.next = curr.next
-        curr.next = new_node
-    
-    def dequ
+        self.head = self.head.next
+        self.size -= 1
+
+    def peek(self):
+        return self.head.data if self.size != 0 else "Queue is empty"
+
+
+def test_llpq():
+    llpq = LLPQ()
+    llpq.enqueue(10, 2)
+    llpq.enqueue(14, 4)
+    llpq.enqueue(16, 4)
+    llpq.enqueue(12, 3)
+    print(llpq.peek())
+    llpq.dequeue()
+    print(llpq.peek())
+    llpq.dequeue()
+    print(llpq.peek())
+
 
 test_lpq()
+test_llpq()
