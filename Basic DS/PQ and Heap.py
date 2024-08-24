@@ -1,8 +1,8 @@
 # PQ is an abstract data structure which can implemented using arrays, linked list, heap, BST
 #             array     l.list      heap        BST
-# enqueue      O(1)      O(n)
-# dequeue      O(n)      O(1)
-# peek         O(n)      O(1)
+# enqueue      O(1)      O(n)      O(logn)     O(logn)
+# dequeue      O(n)      O(1)      O(logn)     O(logn)
+# peek         O(n)      O(1)      O(1)        O(1)
 
 import sys
 
@@ -106,5 +106,93 @@ def test_llpq():
     print(llpq.peek())
 
 
+class HPQ:
+    def __init__(self) -> None:
+        self.H = []
+        self.size = 0
+
+    # _methodName is a convention to name internal methods, that should be called outside the class
+    def _swap(self, i, j):
+        self.H[i], self.H[j] = self.H[j], self.H[i]
+
+    def _shiftUp(self, i):
+        # Basically for all elements in the array as long as the parent is smalled than child,
+        # and if found small, it is swapped and run again with it's parent now.
+        parent_index = (i - 1) // 2
+        while i > 0 and self.H[parent_index] < self.H[i]:
+            self._swap(parent_index, i)
+            i = parent_index
+
+    def _shiftDown(self, i):
+        maxIndex = i
+        left_child, right_child = (2 * i) + 1, (2 * i) + 2
+        if left_child < self.size and self.H[left_child] > self.H[maxIndex]:
+            maxIndex = left_child
+        if right_child < self.size and self.H[right_child] > self.H[maxIndex]:
+            maxIndex = right_child
+        if i != maxIndex:
+            self._swap(i, maxIndex)
+            self._shiftDown(maxIndex)
+
+    def enqueue(self, p):
+        self.H.append(p)  # Add the new element at the end
+        self.size += 1
+        self._shiftUp(self.size - 1)  # Maintain heap property
+
+    def dequeue(self):
+        if self.size == 0:
+            return "Heap is empty"
+        max_value = self.H[0]
+        self.H[0] = self.H[-1]
+        self.H.pop()  # Remove the last element
+        self.size -= 1
+        if self.size > 0:
+            self._shiftDown(0)
+        return max_value
+
+    def changePriority(self, i, p):
+        oldp = self.H[i]
+        self.H[i] = p
+        if p > oldp:
+            self._shiftUp(i)
+        else:
+            self._shiftDown(i)
+
+    def peek(self):
+        return self.H[0] if self.size > 0 else "Heap is empty"
+
+    def remove(self, i):
+        self.changePriority(i, float("inf"))  # Change priority to highest possible
+        self.dequeue()  # Extract the element
+
+    def display(self):
+        print("Priority Queue:", self.H)
+
+
+def test_hpq():
+    pq = HPQ()
+    pq.enqueue(45)
+    pq.enqueue(20)
+    pq.enqueue(14)
+    pq.enqueue(12)
+    pq.enqueue(31)
+    pq.enqueue(7)
+    pq.enqueue(11)
+    pq.enqueue(13)
+    pq.enqueue(7)
+
+    pq.display()
+    print("Node with maximum priority (peek):", pq.peek())
+    print("Dequeued:", pq.dequeue())
+    pq.display()
+
+    pq.changePriority(2, 49)
+    pq.display()
+
+    pq.remove(3)
+    pq.display()
+
+
 test_lpq()
 test_llpq()
+test_hpq()
