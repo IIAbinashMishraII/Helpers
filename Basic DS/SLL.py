@@ -31,7 +31,7 @@ class LinkedList:
     def insert_tail(self, val):
         curr = self.head
         new_node = SNode(val)
-        # Why do we need to use self.head instead of cuur here? 
+        # Why do we need to use self.head instead of curr here? 
         # Because if curr is empty, it will just be a local variable. It will not point to anything and will not work.
         # Else, it references the object self.head, doesn't hold it by itself, so a change in curr.next works.
         if self.head is None:
@@ -127,6 +127,16 @@ class LinkedList:
             print(curr.data, end=' -> ')
             curr = curr.next
         print(None)
+
+    def reverse(self):
+        curr = self.head
+        prev = None
+        while curr:
+            next = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next
+        self.head = prev
         
 ll =LinkedList()
 ll.remove_head()

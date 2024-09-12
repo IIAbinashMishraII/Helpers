@@ -131,6 +131,15 @@ class TreeAlgo:
     def clear(self):
         self.res = []
 
+    def full_paths(self,root, path):
+        if root is None:
+            return 0
+        path.append(root.data)
+        if root.left is None and root.right is None:
+            self.res.append(path)
+        self.full_paths(root.right, path[:-1] + [root.data])
+        self.full_paths(root.left, path[:-1] + [root.data])
+
 def test_tree():
     tree_algo = TreeAlgo()
     root = TreeNode(1)
@@ -138,7 +147,7 @@ def test_tree():
     tree_algo.insert(root, 5)
     tree_algo.insert(root, 15)
     tree_algo.insert(root, 3)
-    
+
     # Perform traversals
     tree_algo.inorder(root)
     print("Inorder traversal (recursive):", tree_algo.res)
@@ -165,5 +174,8 @@ def test_tree():
     print("Reverse Level order traversal:", reverse_levelorder)
     height = tree_algo.height(root)
     print("Height of tree:", height)
+    tree_algo.clear()
+    tree_algo.full_paths(root, [])
+    print(tree_algo.res)
 
 test_tree()
