@@ -11,6 +11,7 @@ class TreeAlgo:
     # All defined here are DFS algorithms
     def __init__(self) -> None:
         self.res = []
+        self.max_sum = float('-inf')
     
     def inorder(self, root):
         if root is None:
@@ -131,18 +132,46 @@ class TreeAlgo:
     def clear(self):
         self.res = []
 
-    def full_paths(self,root, path):
+    def full_paths(self,root, path=[]):
         if root is None:
-            return 0
+            return 
         path.append(root.data)
         if root.left is None and root.right is None:
-            self.res.append(path)
-        self.full_paths(root.right, path[:-1] + [root.data])
-        self.full_paths(root.left, path[:-1] + [root.data])
+            self.res.append(path[:])
+        self.full_paths(root.right, path)
+        self.full_paths(root.left, path)
+        path.pop()
+
+    def structurally_identical(self, root1, root2):
+        if root1 is None and root2 is None:
+            return True
+        if root1 is None or root2 is None:
+            return False
+        if root1.data != root2.data:
+            return False
+        return self.structurally_identical(root1.left, root2.left) and self.structurally_identical(root1.right, root2.right)
+
+    # Diameter and Height of a Binary Tree are same, both are O(n), found by DFS
+    def diameter(self, root):
+        if root is None:
+            return 0
+        left_height = self.diameter(root.left)
+        right_height = self.diameter(root.right)
+        return max(left_height, right_height) + 1
+    
+    def max_path_sum(self, root):
+        if root is None:
+            return 0
+        left_sum = max(0, self.max_path_sum(root.left))
+        right_sum = max(0, self.max_path_sum(root.right))
+        curr_max_path = root.data + left_sum + right_sum
+        self.max_sum = max(self.max_sum, root.data + left_sum + right_sum)
+        return self.max_sum
 
 def test_tree():
     tree_algo = TreeAlgo()
     root = TreeNode(1)
+    root1 = TreeNode(2)
     tree_algo.insert(root, 10)
     tree_algo.insert(root, 5)
     tree_algo.insert(root, 15)
@@ -175,7 +204,10 @@ def test_tree():
     height = tree_algo.height(root)
     print("Height of tree:", height)
     tree_algo.clear()
-    tree_algo.full_paths(root, [])
+    tree_algo.full_paths(root)
     print(tree_algo.res)
+    print(tree_algo.structurally_identical(root, root1))
+    print(tree_algo.diameter(root))
+    print(tree_algo.max_path_sum(root))
 
 test_tree()
