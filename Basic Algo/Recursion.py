@@ -5,4 +5,16 @@ def factorial(n):
         return n
     return n * factorial(n-1) 
 
-print(factorial(5))
+n = int(input())
+def solve(x):
+    if x == 0:
+        return
+    solve(x-1)
+    print(x)
+solve(n)
+
+
+
+
+def test_all():
+    print(factorial(5))
