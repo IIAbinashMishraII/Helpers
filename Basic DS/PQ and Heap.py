@@ -116,7 +116,7 @@ class HPQ:
         self.H[i], self.H[j] = self.H[j], self.H[i]
 
     def _shiftUp(self, i):
-        # Basically for all elements in the array as long as the parent is smalled than child,
+        # Basically for all elements in the array as long as the parent is smaller than child,
         # and if found small, it is swapped and run again with it's parent now.
         parent_index = (i - 1) // 2
         while i > 0 and self.H[parent_index] < self.H[i]:
